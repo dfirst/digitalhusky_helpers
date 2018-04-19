@@ -4,7 +4,8 @@ import unicodedata
 
 all_chars = (unichr(i) for i in xrange(0x110000))
 control_chars = ''.join(
-    char for char in all_chars if unicodedata.category(char) == 'Cc'
+    char for char in all_chars
+    if unicodedata.category(char) == 'Cc' and char not in ['\r', '\t', '\n']
 )
 control_char_re = re.compile('[%s]' % re.escape(control_chars))
 
