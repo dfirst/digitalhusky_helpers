@@ -14,7 +14,12 @@ def sanitize_bytes_control_chars(raw_bytes):
     """
     Clean bytes object ASCII -- Non printable Characters
     """
-    return control_char_re.sub('', raw_bytes.decode('utf-8')).encode('utf-8')
+    try:
+        return control_char_re.sub(
+            '', raw_bytes.decode('utf-8')).encode('utf-8')
+    except UnicodeDecodeError:
+        return control_char_re.sub(
+            '', raw_bytes.decode('cp1252')).encode('utf-8')
 
 
 def sanitize_str_control_chars(raw_string):
